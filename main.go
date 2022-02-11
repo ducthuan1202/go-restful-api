@@ -18,7 +18,7 @@ import (
 func init() {
 	gin.SetMode(gin.DebugMode)
 	configs.SetupDatabaseConnection()
-	// configs.Migration()
+	configs.Migration()
 	// configs.Seeding()
 }
 

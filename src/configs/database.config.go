@@ -60,10 +60,11 @@ func Migration() {
 
 	Instance.AutoMigrate(&models.User{})
 
+	Instance.AutoMigrate(&models.AuthToken{})
+
 	Instance.AutoMigrate(&models.Category{})
 
 	Instance.AutoMigrate(&models.Product{})
-
 }
 
 func Seeding() {

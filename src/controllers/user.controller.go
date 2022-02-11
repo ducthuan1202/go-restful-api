@@ -77,6 +77,9 @@ func (ctrl UserController) Login(c *gin.Context) {
 	if v, ok := authResult.(models.User); ok {
 		token := ctrl.services.JWTServivce.GenerateToken(fmt.Sprintf("%v", v.ID))
 		v.Token = token
+
+		ctrl.services.UserServivce.Repository.SaveAuthToken(v.CreateAuthToken(token))
+
 		response := helpers.BuildResponse(helpers.ResponseSuccess{
 			Message: "OK",
 			Data:    v,

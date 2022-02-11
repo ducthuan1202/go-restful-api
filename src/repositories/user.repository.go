@@ -45,6 +45,18 @@ func (r *UserRepository) VerifyCredential(email string, password string) interfa
 	return nil
 }
 
+// VerifyCredential is function
+func (r *UserRepository) SaveAuthToken(authToken *models.AuthToken) error {
+
+	result := r.DBConnection.Model(authToken).Create(authToken)
+
+	if result.RowsAffected == 1 && result.Error == nil {
+		return nil
+	}
+
+	return result.Error
+}
+
 // CreateUser is function
 func (r *UserRepository) CreateUser(input dtos.UserCreateInput) (*models.User, error) {
 
@@ -55,7 +67,6 @@ func (r *UserRepository) CreateUser(input dtos.UserCreateInput) (*models.User, e
 	}
 
 	result := r.DBConnection.Model(&models.User{}).Create(&user)
-
 	if result.RowsAffected == 1 && result.Error == nil {
 		return &user, nil
 	}

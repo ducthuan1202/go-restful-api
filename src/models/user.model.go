@@ -8,3 +8,11 @@ type User struct {
 	Password string `gorm:"->;<-;not null" json:"-"`
 	Token    string `gorm:"-" json:"token,omitempty"`
 }
+
+func (u *User) CreateAuthToken(token string) *AuthToken {
+	return &AuthToken{
+		UserID:       u.ID,
+		Token:        token,
+		RefreshToken: token,
+	}
+}
