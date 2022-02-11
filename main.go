@@ -7,7 +7,6 @@ import (
 	"restapi/src/configs"
 	"restapi/src/controllers"
 	"restapi/src/helpers"
-	"restapi/src/jobs"
 	"restapi/src/routers"
 	"restapi/src/services"
 
@@ -17,16 +16,16 @@ import (
 )
 
 func init() {
-
 	gin.SetMode(gin.DebugMode)
 	configs.SetupDatabaseConnection()
 	// configs.Migration()
+	// configs.Seeding()
 }
 
 // main -> route -> controller -> service -> repository -> database
 func main() {
 
-	jobs.InitialJobs()
+	// jobs.InitialJobs()
 
 	// get environments
 	appPort := helpers.GetenvWithDefaultValue("APP_PORT", "8080")
@@ -51,7 +50,6 @@ func main() {
 	if err := r.Run(fmt.Sprintf(":%s", appPort)); err != nil {
 		log.Fatal(err.Error())
 	} else {
-
 		log.Printf("service starting at http://localhost:%s", appPort)
 	}
 }

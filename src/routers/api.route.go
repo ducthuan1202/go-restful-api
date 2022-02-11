@@ -13,8 +13,15 @@ func RegisterApiRoutes(r *gin.Engine, ctrl *controllers.RootController) *gin.Rou
 	{
 		routes.Use(middlewares.WriteLogApiRequest)
 
+		// user endpoints
+		usersRoutes := routes.Group("/users")
+		{
+			usersRoutes.POST("/register", ctrl.UserController.Create)
+			usersRoutes.POST("/login", ctrl.UserController.Login)
+		}
+
 		// products endpoints
-		productsRoutes := routes.Group("/products")
+		productsRoutes := routes.Group("/products", middlewares.AuthorizeJWT(*ctrl.Services.JWTServivce))
 		{
 			productsRoutes.GET("/", ctrl.ProductController.GetAll)
 			productsRoutes.GET("/:productId", ctrl.ProductController.GetById)

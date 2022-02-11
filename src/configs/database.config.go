@@ -58,26 +58,40 @@ func GetDatabaseConnection() *gorm.DB {
 // Migration is function
 func Migration() {
 
-	cateogries := []models.Category{
-		{ID: 1, Name: "Dien Thoai"},
-		{ID: 2, Name: "May Tinh Bang"},
-	}
-
-	products := []models.Product{
-		{ID: 1, Name: "Iphone 11 Pro Max 128Gb", CategoryID: 1},
-		{ID: 2, Name: "Samsung Note 20 Ultra", CategoryID: 1},
-		{ID: 3, Name: "Xiaomi Mi 11 Lte", CategoryID: 1},
-		{ID: 4, Name: "Ipad Air Wifi", CategoryID: 2},
-		{ID: 5, Name: "Lenovo pad2", CategoryID: 2},
-	}
+	Instance.AutoMigrate(&models.User{})
 
 	Instance.AutoMigrate(&models.Category{})
-	for index := range cateogries {
-		Instance.Create(&cateogries[index])
-	}
 
 	Instance.AutoMigrate(&models.Product{})
-	for index := range products {
-		Instance.Create(&products[index])
+
+}
+
+func Seeding() {
+
+	// categories
+	{
+		cateogries := []models.Category{
+			{ID: 1, Name: "Dien Thoai"},
+			{ID: 2, Name: "May Tinh Bang"},
+		}
+
+		for index := range cateogries {
+			Instance.Create(&cateogries[index])
+		}
+	}
+
+	// products
+	{
+		products := []models.Product{
+			{ID: 1, Name: "Iphone 11 Pro Max 128Gb", CategoryID: 1},
+			{ID: 2, Name: "Samsung Note 20 Ultra", CategoryID: 1},
+			{ID: 3, Name: "Xiaomi Mi 11 Lte", CategoryID: 1},
+			{ID: 4, Name: "Ipad Air Wifi", CategoryID: 2},
+			{ID: 5, Name: "Lenovo pad2", CategoryID: 2},
+		}
+
+		for index := range products {
+			Instance.Create(&products[index])
+		}
 	}
 }
